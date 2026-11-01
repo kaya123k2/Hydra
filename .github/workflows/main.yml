@@ -16,9 +16,9 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Setup .NET
-      uses: microsoft/setup-dotnet@v4
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '8.0.x' # Adjust based on the project's target framework (e.g., 6.0, 7.0, 8.0)
+        dotnet-version: '8.0.x' # Adjust this if the mod targets an older framework like 6.0 or 7.0
 
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild/setup-msbuild@v2
