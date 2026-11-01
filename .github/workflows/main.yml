@@ -24,10 +24,10 @@ jobs:
       uses: microsoft/setup-msbuild@v2
 
     - name: Restore NuGet Packages
-      run: nuget restore ${{ github.event.repository.name }}.sln
+      run: nuget restore HydraMenu.sln
       
     - name: Build Solution
-      run: msbuild ${{ github.event.repository.name }}.sln /p:Configuration=Release /p:Platform="Any CPU"
+      run: msbuild HydraMenu.sln /p:Configuration=Release /p:Platform="Any CPU"
 
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v4
