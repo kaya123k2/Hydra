@@ -1,0 +1,38 @@
+name: Build Hydra Mod
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: microsoft/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x' # Adjust based on the project's target framework (e.g., 6.0, 7.0, 8.0)
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild/setup-msbuild@v2
+
+    - name: Restore NuGet Packages
+      run: nuget restore ${{ github.event.repository.name }}.sln
+      
+    - name: Build Solution
+      run: msbuild ${{ github.event.repository.name }}.sln /p:Configuration=Release /p:Platform="Any CPU"
+
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: HydraMenu-DLL
+        path: |
+          **/bin/Release/**/*.dll
+          !**/bin/Release/**/*.pdb
